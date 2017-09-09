@@ -1,4 +1,4 @@
-var app = angular.module("app", []);
+var app = angular.module("app", ["ngMaterial"]);
 
 app.controller("indexCtrl", ["$scope", function($scope) {
     console.log("Index Controller");
@@ -10,23 +10,13 @@ app.controller("indexCtrl", ["$scope", function($scope) {
         "title": "Hello Message"
     };
 
-    // handles the callback from the received event
-    var handleCallback = function(msg) {
-        console.log(msg);
-        /*$scope.$apply(function() {
-            $scope.msg = JSON.parse(msg.data)
-            console.log($scope.msg);
-        });*/
-    }
 
     // let sseSocreUrl = `/score`;
     let sseSocreUrl = `${SERVER_URL}/score`;
     var source = new EventSource(sseSocreUrl);
-    // source.addEventListener('message', handleCallback, false);
 
     source.onmessage = function(event) {
         console.log(event.data);
-
         $scope.$apply(function() {
             $scope.msg = JSON.parse(event.data)
             console.log($scope.msg);
