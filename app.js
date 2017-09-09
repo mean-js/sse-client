@@ -3,23 +3,21 @@ var app = angular.module("app", ["ngMaterial"]);
 app.controller("indexCtrl", ["$scope", function($scope) {
     console.log("Index Controller");
 
-    let SERVER_URL = "http://192.168.0.104:3010"
-
-    // the last received msg
-    $scope.msg = {
-        "title": "Hello Message"
-    };
-
+    var cardObj = { "title": "Affixus Sytstems Pvt Ltd", "ts": moment().toDate() };
+    $scope.refjson = {
+        "cardList": [cardObj]
+    }
 
     // let sseSocreUrl = `/score`;
-    let sseSocreUrl = `${SERVER_URL}/score`;
+    var sseSocreUrl = `http://192.168.0.104:3010/sse-api`;
     var source = new EventSource(sseSocreUrl);
 
     source.onmessage = function(event) {
-        console.log(event.data);
+        var newCardData = JSON.parse(event.data);
+        $scope.refjson.cardList.splice(0, 0, newCardData);
+
         $scope.$apply(function() {
-            $scope.msg = JSON.parse(event.data)
-            console.log($scope.msg);
+            console.log($scope.refjson);
         });
     };
 
