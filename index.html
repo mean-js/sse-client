@@ -42,7 +42,7 @@
 
     <div layout="row" style="height:90vh; overflow-y:scroll ">
         <div flex="50" flex-offset="25">
-            <md-card ng-repeat="item in refjson.cardList">
+            <md-card ng-repeat="item in refjson.cardList" ng-style="item.bg">
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{item.title}}</span>
